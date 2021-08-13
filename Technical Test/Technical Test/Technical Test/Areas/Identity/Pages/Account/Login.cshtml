@@ -1,0 +1,106 @@
+﻿@page
+@model LoginModel
+
+
+<h1>@ViewData["Title"]</h1>
+
+
+
+
+
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-12 col-xl-10">
+                <div class="card shadow-lg o-hidden border-0 my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-flex">
+
+                                <img class="flex-grow-1 bg-login-image" src="\wwwroot\img\image3.png">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="user">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <form id="account" method="post">
+                                            <h4>Use a local account to log in.</h4>
+                                            <hr />
+                                            <div asp-validation-summary="All" class="text-danger"></div>
+                                            <div class="form-group">
+                                                <label asp-for="Input.Email"></label>
+                                                <input asp-for="Input.Email" class="form-control" />
+                                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="Input.Password"></label>
+                                                <input asp-for="Input.Password" class="form-control" />
+                                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label asp-for="Input.RememberMe">
+                                                        <input asp-for="Input.RememberMe" />
+                                                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary d-block btn-user w-100">Log in</button>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                            </div>
+                                        </form>
+                                        
+                                   </div> <hr /><a class="btn btn-primary d-block btn-google btn-user w-100 mb-2" role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a><a class="btn btn-primary d-block btn-facebook btn-user w-100" role="button"><i class="fab fa-facebook-f"></i>&nbsp; Login with Facebook</a>
+                                                <p>
+                                                    <hr />
+                                                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                                                </p>
+                                                <p>
+                                           
+                                                    
+                                                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new User</a>
+                                                </p>
+                                            </div>
+                                    
+                            </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  
+    
+    <div class="col-md-6 col-md-offset-1">
+        <section>
+           
+            <hr />
+            @{ if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+        <div>
+
+        </div> }
+    else
+    {
+        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+            <div>
+                <p>
+                    @foreach (var provider in Model.ExternalLogins)
+                    {
+        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>}
+                </p>
+            </div>
+        </form> } }
+        </section>
+    </div>
+</body>
+
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
